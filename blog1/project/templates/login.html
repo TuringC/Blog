@@ -1,0 +1,34 @@
+{% extends 'base_temp.html' %}
+{% from 'bootstrap/form.html' import render_form, render_field, render_form_row %}
+
+
+
+{% block title %}
+    <title>登录-E博客</title>
+{% endblock %}
+
+
+{% block links %}
+    {{ render_nav_item('index', 'E-博客', use_li=True) }}
+    {% if current_user.is_authenticated %}
+    {{ render_nav_item('personalPage', current_user.username, use_li=True) }}
+    {{ render_nav_item('logout', '注销', use_li=True) }}
+    {{ render_nav_item('new', '写博客', use_li=True) }}
+    {% else %}
+    {{ render_nav_item('login', '登录', use_li=True) }}
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+{% if current_user.is_authenticated %}
+    <h4>你已登录!</h4>
+{% else %}
+    <br><br><br>
+    <h3 align="center">登录</h3>
+    <form method="post" action="{{ url_for('login') }}">
+            {{ form.csrf_token }}
+            {{ render_form(form) }}
+    </form>
+    {% endif %}
+{% endblock %}

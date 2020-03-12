@@ -1,0 +1,77 @@
+{% extends 'base_temp.html' %}
+{% from 'bootstrap/form.html' import render_form, render_field, render_form_row %}
+
+
+
+{% block title %}
+    <title>我的-E博客</title>
+{% endblock %}
+
+
+{% block links %}
+    {{ render_nav_item('index', 'E-博客', use_li=True) }}
+    {% if current_user.is_authenticated %}
+    {{ render_nav_item('personalPage', current_user.username, use_li=True) }}
+    {{ render_nav_item('logout', '注销', use_li=True) }}
+    {{ render_nav_item('new', '写博客', use_li=True) }}
+    {% else %}
+    {{ render_nav_item('login', '登录', use_li=True) }}
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+    <br>
+    <br>
+    {% from 'bootstrap/pagination.html' import render_pagination %}
+    <div class="container">
+        <div class="row">
+<!--            <div class="col-md-3 bg-dark"><br><br><p></p></div>-->
+
+
+<!--            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">-->
+<!--                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"-->
+<!--                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--                    <span class="navbar-toggler-icon"></span>-->
+<!--                </button>-->
+<!--                <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
+<!--                    <ul class="navbar-nav mr-auto">-->
+<!--                        {{ render_nav_item('index', 'E-博客', use_li=True) }}-->
+<!--                        {% if current_user.is_authenticated %}-->
+<!--                        {{ render_nav_item('personalPage', current_user.username, use_li=True) }}-->
+<!--                        {% else %}-->
+<!--                        {{ render_nav_item('login', '登录', use_li=True) }}-->
+<!--                        {% endif %}-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </nav>-->
+            <div class="col-md-12 ">
+            {% from 'bootstrap/pagination.html' import render_pagination %}
+
+                <div class="page-header">
+                    <h3>我的博文
+                        <small><small></small></small>
+                    </h3><hr><br>
+                </div>
+
+            {% for article in articles %}
+                <div class="page-header">
+                    <h3>{{ article.title }}
+                        <small>
+                            <small>
+                                {{ article.author }}
+                            </small>
+                        </small>
+                    </h3><br>
+                </div>
+                <p>{{article.body}}</p>
+                <form method="post" action="{{ url_for('delete', id=article.id) }}">
+                    {{ form.csrf_token }}
+                    {{ render_form(form) }}
+                </form><br><br>
+            {% endfor %}
+            {{ render_pagination(pagination) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

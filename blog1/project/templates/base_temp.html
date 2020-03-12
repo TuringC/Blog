@@ -1,0 +1,99 @@
+{% from 'bootstrap/nav.html' import render_nav_item %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block head %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="favicon.ico">
+
+    {% block styles %}
+    <!-- Bootstrap CSS -->
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+    {{ bootstrap.load_css() }}
+    {% endblock %}
+
+    {% block title%}
+    <title></title>
+    {% endblock %}
+    {% endblock %}
+  </head>
+  <body>
+    <!--    Your navbar-->
+    {% block top_nav %}
+    <nav class="navbar-brand navbar-expand-lg fixed-top navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {% block links %}
+                {{ render_nav_item('index', 'Home', use_li=True) }}
+                {{ render_nav_item('test_form', 'Form', use_li=True) }}
+                {{ render_nav_item('test_nav', 'Nav', use_li=True) }}
+                {{ render_nav_item('test_pagination', 'Pagination', use_li=True) }}
+                {{ render_nav_item('test_static', 'Static', use_li=True) }}
+                {{ render_nav_item('test_flash', 'Flash Messages', use_li=True) }}
+                {% endblock %}
+            </ul>
+        </div>
+    </nav>
+    {% endblock %}
+
+
+    {% block left_nav %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+<!--                &lt;!&ndash;手机导航栏&ndash;&gt;-->
+<!--                <div id="mobile-menu" class="mobile-nav visible-xs visible-sm">-->
+<!--                    <ul>-->
+<!--                        <li><a href="#">首页</a></li>-->
+<!--                        <li><a href="#">Java</a></li>-->
+<!--                        <li><a href="#">SVN</a></li>-->
+<!--                        <li><a href="#">iOS</a></li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+                <!--pc导航栏-->
+                <nav class="navbar-inverse visible-lg visible-md" role="navigation">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <br><br><br><br><br><br>
+                            <a class="navbar-brand" href="{{ url_for('index') }}">E博客</a>
+                        </div>
+                        <div>
+                            <ul class="nav navbar-nav">
+                                <br>
+                                <li><a href="{{ url_for('personalPage') }}">主页</a></li>
+                                <li><a href="{{ url_for('new') }}">写博客</a></li>
+                                <li><a href="{{ url_for('logout') }}">注销</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+<!--                &lt;!&ndash;手机导航栏侧滑&ndash;&gt;-->
+<!--                <div class="nav-btn visible-xs visible-sm">-->
+<!--                    <a href="#" class="mobile-nav-taggle" id="mobile-nav-taggle">-->
+<!--                        <span class="glyphicon glyphicon-align-justify"></span>-->
+<!--                    </a>-->
+<!--                </div>-->
+            </div>
+            {% endblock %}
+            <div class="col-md-6">
+                <!-- Your page content -->
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+
+
+    {% block scripts %}
+    <!-- Optional JavaScript -->
+    {{ bootstrap.load_js() }}
+    {% endblock %}
+  </body>
+</html>
